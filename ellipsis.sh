@@ -17,8 +17,8 @@ pkg.pull() {
             ;;
         linux)
             if utils.cmd_exists apt-get; then
-                DEBIAN_FRONTEND=noninteractive apt-get update;
-                DEBIAN_FRONTEND=noninteractive apt-get install zsh;
+                DEBIAN_FRONTEND=noninteractive sudo apt-get update;
+                DEBIAN_FRONTEND=noninteractive sudo apt-get install zsh;
             fi
             ;;
     esac
