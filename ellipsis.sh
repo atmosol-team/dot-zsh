@@ -22,5 +22,4 @@ pkg.pull() {
             fi
             ;;
     esac
-    chsh -s $(which zsh);
 }
