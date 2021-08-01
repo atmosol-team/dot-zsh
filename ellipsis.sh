@@ -17,11 +17,11 @@ pkg.install() {
         esac
     fi
 
-    # Antigen
-    if [ ! -d "$PKG_PATH/antigen" ]; then
-        git clone https://github.com/zsh-users/antigen.git "$PKG_PATH/antigen"
+    # Zplugin
+    if [ ! -d "$PKG_PATH/zplugin" ]; then
+        git clone https://github.com/zdharma/zplugin.git "$PKG_PATH/zplugin"
     else
-        ( cd "$PKG_PATH/antigen" && git pull --ff-only )
+        $PKG_PATH/zplugin/zplugin.zsh self-update
     fi
 }
 
@@ -33,17 +33,23 @@ pkg.init() {
             . "$file"
         done
 
-        # Antigen
-        source $PKG_PATH/antigen/antigen.zsh
+        # Zplugin
+        if [ -f "$PKG_PATH/zplugin/zplugin.zsh" ]; then
+            source $PKG_PATH/zplugin/zplugin.zsh
+        fi
     fi
 }
 
 pkg.link() {
     fs.link_file .zshrc
+    fs.link_file .p10k.zsh
 }
 
 pkg.unlink() {
     if [ -L "$HOME/.zshrc" ] && [ "$(readlink $HOME/.zshrc)" = "$PKG_PATH/.zshrc" ]; then
         rm "$HOME/.zshrc"
+    fi
+    if [ -L "$HOME/.p10k.zsh" ] && [ "$(readlink $HOME/.p10k.zsh)" = "$PKG_PATH/.p10k.zsh" ]; then
+        rm "$HOME/.p10k.zsh"
     fi
 }
