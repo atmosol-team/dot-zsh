@@ -18,11 +18,11 @@ pkg.install() {
     fi
 
     # Antigen
-    if [ ! -d "$PKG_PATH/antigen" ]; do
+    if [ ! -d "$PKG_PATH/antigen" ]; then
         git clone https://github.com/zsh-users/antigen.git "$PKG_PATH/antigen"
     else
         ( cd "$PKG_PATH/antigen" && git pull --ff-only )
-    done
+    fi
 }
 
 pkg.init() {
