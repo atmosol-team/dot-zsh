@@ -16,6 +16,13 @@ pkg.install() {
                 ;;
         esac
     fi
+
+    # Antigen
+    if [ ! -d "$PKG_PATH/antigen" ]; do
+        git clone https://github.com/zsh-users/antigen.git "$PKG_PATH/antigen"
+    else
+        ( cd "$PKG_PATH/antigen" && git pull --ff-only )
+    done
 }
 
 pkg.init() {
@@ -25,6 +32,9 @@ pkg.init() {
         alias cls='clear'           # Clear screen, the old-fashioned way
 
         . "$PKG_PATH/init/config.zsh"
+
+        # Antigen
+        source $PKG_PATH/antigen/antigen.zsh
     fi
 }
 
