@@ -19,12 +19,12 @@ pkg.install() {
 }
 
 pkg.init() {
-    if [[ $SHELL =~ /zsh$ ]]; then
-        # Aliases
-        alias reload!='. ~/.zshrc'  # Reload ZSH
-        alias cls='clear'           # Clear screen, the old-fashioned way
-
-        . "$PKG_PATH/init/config.zsh"
+    # Only run if we're running inside ZSH
+    if [[ "$(ps -p $$ -o command=)" = "zsh" ]]; then
+        # Load all *.zsh files in the init folder
+        for file in $PKG_PATH/init/*[.]zsh; do
+            . "$file"
+        done
     fi
 }
 
