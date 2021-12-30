@@ -19,9 +19,9 @@ pkg.install() {
 
     # Zplugin
     if [ ! -d "$PKG_PATH/zplugin" ]; then
-        git clone https://github.com/zdharma/zplugin.git "$PKG_PATH/zplugin"
+        git clone https://github.com/zdharma-continuum/zinit.git "$PKG_PATH/zinit"
     else
-        $PKG_PATH/zplugin/zplugin.zsh self-update
+        $PKG_PATH/zinit/zinit.zsh self-update
     fi
 }
 
@@ -34,8 +34,8 @@ pkg.init() {
         done
 
         # Zplugin
-        if [ -f "$PKG_PATH/zplugin/zplugin.zsh" ]; then
-            source $PKG_PATH/zplugin/zplugin.zsh
+        if [ -f "$PKG_PATH/zinit/zinit.zsh" ]; then
+            source $PKG_PATH/zinit/zinit.zsh
         fi
     fi
 }
