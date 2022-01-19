@@ -23,6 +23,36 @@ pkg.install() {
     else
         $PKG_PATH/zinit/zinit.zsh self-update
     fi
+
+    # Prompt for Nerd font download
+    FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/SourceCodePro.zip"
+
+    if [ ! -f "$PKG_PATH/.no-font-prompt" ]; then
+        echo ""
+        read -e -p "Do you want to download the Sauce Code Pro Nerd Font? [Y/n/never] " DOWNLOAD_FONT
+        if [[ $DOWNLOAD_FONT =~ ^[Yy]([Ee][Ss])?$ ]]; then
+            # Look for common browsers/OS support if not set in environment
+            browsers=( "explorer.exe" "open" "xdg-open" "gnome-open" "browsh" "w3m" "links2" "links" "lynx" )
+            for b in "${browsers[@]}"; do
+                if [ "$(command -v $b)" ]; then
+                    BROWSER="$b"
+                    break
+                fi
+            done
+
+            if [ -n "$BROWSER" ]; then
+                $BROWSER "$FONT_URL"
+            else
+                echo -e "\nDownload the Sauce Code Pro font here:\n  $FONT_URL\n"
+                read -n 1 -s -r -p "Press any key to continue..."
+                read -s -t 0 # Clear any extra keycodes (e.g. arrows)
+                echo ""
+            fi
+            touch "$PKG_PATH/.no-font-prompt"
+        elif [[ $DOWNLOAD_FONT =~ ^[Nn][Ee][Vv][Ee][Rr]$ ]]; then
+            touch "$PKG_PATH/.no-font-prompt"
+        fi
+    fi
 }
 
 pkg.init() {
