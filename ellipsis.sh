@@ -21,7 +21,7 @@ pkg.install() {
     if [ ! -d "$PKG_PATH/zinit" ]; then
         git clone https://github.com/zdharma-continuum/zinit.git "$PKG_PATH/zinit"
     else
-        $PKG_PATH/zinit/zinit.zsh self-update
+        zsh $PKG_PATH/zinit/zinit.zsh self-update
     fi
 
     # Prompt for Nerd font download
