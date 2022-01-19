@@ -17,8 +17,8 @@ pkg.install() {
         esac
     fi
 
-    # Zplugin
-    if [ ! -d "$PKG_PATH/zplugin" ]; then
+    # Zinit (formerly Zplugin)
+    if [ ! -d "$PKG_PATH/zinit" ]; then
         git clone https://github.com/zdharma-continuum/zinit.git "$PKG_PATH/zinit"
     else
         $PKG_PATH/zinit/zinit.zsh self-update
