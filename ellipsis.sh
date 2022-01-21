@@ -17,6 +17,25 @@ pkg.install() {
         esac
     fi
 
+    # Detect default shell. If not ZSH, prompt to change.
+    case $(os.platform) in
+        osx)
+            DEFAULT_SHELL="$(dscl . -read $HOME shell | awk -F ' ' '{print $NF}')"
+            ;;
+        *)
+            DEFAULT_SHELL="$(getent passwd $(id -un) | awk -F : '{print $NF}')"
+            ;;
+    esac
+    if [[ (! -f "$PKG_PATH/.no-chsh-prompt") && (! "$DEFAULT_SHELL" =~ zsh) ]]; then
+        echo ""
+        read -e -p "Change default shell to ZSH? [Y/n/never] " CHANGE_SHELL
+        if [[ $CHANGE_SHELL =~ ^[Yy]([Ee][Ss])?$ ]]; then
+            chsh -s $(command -v zsh)
+        elif [[ $CHANGE_SHELL =~ ^[Nn][Ee][Vv][Ee][Rr]$ ]]; then
+            touch "$PKG_PATH/.no-chsh-prompt"
+        fi
+    fi
+
     # Zinit (formerly Zplugin)
     if [ ! -d "$PKG_PATH/zinit" ]; then
         git clone https://github.com/zdharma-continuum/zinit.git "$PKG_PATH/zinit"
@@ -29,7 +48,7 @@ pkg.install() {
 
     if [ ! -f "$PKG_PATH/.no-font-prompt" ]; then
         echo ""
-        read -e -p "Do you want to download the Sauce Code Pro Nerd Font? [Y/n/never] " DOWNLOAD_FONT
+        read -e -p "Download the Sauce Code Pro Nerd Font? [Y/n/never] " DOWNLOAD_FONT
         if [[ $DOWNLOAD_FONT =~ ^[Yy]([Ee][Ss])?$ ]]; then
             # Look for common browsers/OS support if not set in environment
             browsers=( "explorer.exe" "open" "xdg-open" "gnome-open" "browsh" "w3m" "links2" "links" "lynx" )
