@@ -8,7 +8,7 @@ pkg.install() {
                     brew install zsh;
                 fi
                 ;;
-            linux)
+            linux|wsl2|wsl1)
                 if utils.cmd_exists apt-get; then
                     sudo apt-get -y update;
                     sudo apt-get -y install zsh;
