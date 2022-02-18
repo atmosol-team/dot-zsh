@@ -13,3 +13,7 @@ if [[ -a ~/.localrc ]]
 then
   source ~/.localrc
 fi
+
+# Redirect from WSL default directory since linux fs is faster
+pwd | grep -E "^/mnt/./Users/[^/]+?$" >/dev/null 2>&1 && cd
+echo "$OLDPWD" | grep -E "^/mnt/./Users/[^/]+?$" >/dev/null 2>&1 && cd
