@@ -17,3 +17,8 @@ fi
 # Redirect from WSL default directory since linux fs is faster
 pwd | grep -E "^/mnt/./Users/[^/]+?$" >/dev/null 2>&1 && cd
 echo "$OLDPWD" | grep -E "^/mnt/./Users/[^/]+?$" >/dev/null 2>&1 && cd
+
+# Load NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
