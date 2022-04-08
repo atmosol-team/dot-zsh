@@ -5,9 +5,9 @@ else
     export PATH="$PATH:~/.ellipsis/bin"
 fi
 
-# Zplugin
+# Zinit
 source ~/.p10k.zsh
-zplugin ice depth=1; zplugin light romkatv/powerlevel10k
+zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 if [[ -a ~/.localrc ]]
 then
