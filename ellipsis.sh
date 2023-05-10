@@ -26,14 +26,9 @@ pkg.install() {
             DEFAULT_SHELL="$(getent passwd $(id -un) | awk -F : '{print $NF}')"
             ;;
     esac
-    if [[ (! -f "$PKG_PATH/.no-chsh-prompt") && (! "$DEFAULT_SHELL" =~ zsh) ]]; then
-        echo ""
-        read -e -p "Change default shell to ZSH? [Y/n/never] " CHANGE_SHELL
-        if [[ $CHANGE_SHELL =~ ^[Yy]([Ee][Ss])?$ ]]; then
-            chsh -s $(command -v zsh)
-        elif [[ $CHANGE_SHELL =~ ^[Nn][Ee][Vv][Ee][Rr]$ ]]; then
-            touch "$PKG_PATH/.no-chsh-prompt"
-        fi
+    if [[ ! "$DEFAULT_SHELL" =~ zsh ]]; then
+        echo "Changing default shell to zsh..."
+        chsh -s $(command -v zsh)
     fi
 
     # Zinit (formerly Zplugin)
